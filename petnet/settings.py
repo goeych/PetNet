@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 CART_SESSION_ID = 'cart'
 SESSION_COOKIE_AGE = 86400
 
-
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'myaccount'
 LOGOUT_REDIRECT_URL = 'frontpage'
 
