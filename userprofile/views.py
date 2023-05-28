@@ -1,4 +1,6 @@
-from django.shortcuts import render,redirect
+
+from django.conf import settings
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
@@ -10,7 +12,7 @@ from django.db.models import Q
 from userprofile.models import Userprofile
 from store.forms import ProductForm
 
-from store.models import Product,Category
+from store.models import Product,Category,Order,OrderItem
 
 # Create your views here.
 
@@ -20,6 +22,14 @@ def vendor_detail(request,pk):
     
     context={'user':user,'products':products}
     return render(request,'userprofile/vendor_detail.html',context)
+
+@login_required
+def my_store_order_detail(request,pk):
+    order = get_object_or_404(Order,pk=pk)
+
+    context={'order':order,'title':'Order Detail',}
+    return render(request,'userprofile/my_store_order_detail.html',context)
+
 
 @login_required
 def add_product(request):
@@ -74,8 +84,11 @@ def decommission_product(request,pk):
 def my_store(request):
     #products = request.user.products.exclude(status=Product.DECOMMISSION)
     products = request.user.products.filter(~Q(status=Product.DECOMMISSION))
+    order_items = OrderItem.objects.filter(product__user=request.user)
     
-    context={'title':'My store','products':products,}
+    context={'title':'My store','products':products,
+             'order_items':order_items,}
+    
     return render(request,'userprofile/my_store.html',context)
 
 @login_required
@@ -102,6 +115,8 @@ def signup(request):
     context = {'form':form}
     
     return render(request,'userprofile/signup.html',context)
+
+
 
             
             
