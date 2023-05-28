@@ -80,6 +80,7 @@ class Product(models.Model):
 class Order(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    email = models.CharField(max_length=100,blank=True,null=True)
     address = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
@@ -92,7 +93,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,related_name='items',on_delete=models.CASCADE)
     product = models.ForeignKey(Product,related_name='items',on_delete=models.CASCADE)
-    price = models.IntegerField()
+    price = models.DecimalField(max_digits=8,decimal_places=2,blank=True,null=True)
     quantity = models.IntegerField(default=1)
 
     def get_display_price(self):

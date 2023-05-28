@@ -7,6 +7,7 @@ from django.db.models import Q
 from .forms import OrderForm
 from django.contrib.auth.decorators import login_required
 from .cart import Cart
+from .utilities import *
 
 from .models import Product,Category,Order,OrderItem
 # Create your views here.
@@ -97,6 +98,7 @@ def checkout(request):
         order = Order.objects.create(
             first_name = data['first_name'],
             last_name = data['last_name'],
+            email = data['email'],
             address = data['address'],
             zipcode = data['zipcode'],
             city = data['city'],
@@ -113,7 +115,9 @@ def checkout(request):
             price = product.price * quantity
             item = OrderItem.objects.create(order=order,product=product,price=price,quantity=quantity)
             
-        cart.clear()                
+        cart.clear()  
+        notify_customer(order)
+        notify_vendor(order)           
         
         return JsonResponse({'session':session,'order':payment_intent})
     else:

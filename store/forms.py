@@ -5,7 +5,7 @@ from .models import Product,Order
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('first_name','last_name','address','zipcode','city',)
+        fields = ('first_name','last_name','email','address','zipcode','city',)
 
 class ProductForm(forms.ModelForm):
     price = forms.DecimalField(decimal_places=2)
