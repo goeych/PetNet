@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+STRIPE_PUB_KEY = 'pk_test_51N5h0sIYkQYtvPH1R5IJxgkK3lbtjpGEtfvHPVwSXvp9w1vX6ojuhZ7tqoP88WkuEt01Z253EF1X8XqrC0mrRofm00QrMTVdOY'
+STRIPE_SECRET_KEY = 'sk_test_51N5h0sIYkQYtvPH1DagiB1MUmCDrZUdzAT1NlxcGMHLCIrL39SIrW1FUxwBE0at5JEs25HyzQN1nDQRWEvdRisVK00CjUjfVLu'
+
+
 CART_SESSION_ID = 'cart'
 SESSION_COOKIE_AGE = 86400
 
@@ -61,6 +65,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'petnet.urls'
 
+WEBSITE_URL = 'http://127.0.0.1:8000'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -72,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'store.context_processors.cart',
             ],
         },
     },
