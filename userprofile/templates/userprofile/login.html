@@ -3,6 +3,61 @@
 {% block title %}Login {%endblock%}
 
 {% block content %}
+
+    <div class="container">
+          <div class="login--wrapper">
+
+              {% if page == 'login'%}
+
+              
+                <form method='post' class="form">
+                    {% csrf_token %}
+                    <h1>Log in</h1>
+                    <h4>Login to view</h4>
+      
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="text" class="form-control" name="username" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+                  </div>
+
+                  <div class="mb-3">
+                      <label for="exampleInputPassword1" class="block text-sm font-medium text-gray-700">Password</label>
+                      <input type="password" name="password" id="exampleInputPassword1" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                    </div>
+
+                  
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <p>Dont have an account!!<a href="{% url 'register' %}">registrer here</a></p>
+                </form>
+                {% else %}
+                    <form method="post" class="form" >
+                        {% csrf_token %}
+                        <h1>Signup</h1>
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">{{field.label}}</label>
+                                {{field}}
+                            </div>
+
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <p>Already have an account!!<a href="{% url 'login' %}">Login here</a></p>
+                    </form>
+                    
+                
+                {% endif %}
+                
+        </div>        
+    </div>
+
+    
     <h2 class="text-2xl">Login</h2>
 
     <form method="post" action=".">
