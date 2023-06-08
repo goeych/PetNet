@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,10 +27,6 @@ SECRET_KEY = 'django-insecure-owg$c=3_cry443-03($0v2y385-(k3))0^s^4l98s2q%u*bct4
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-STRIPE_PUB_KEY = 'pk_test_51N5h0sIYkQYtvPH1R5IJxgkK3lbtjpGEtfvHPVwSXvp9w1vX6ojuhZ7tqoP88WkuEt01Z253EF1X8XqrC0mrRofm00QrMTVdOY'
-STRIPE_SECRET_KEY = 'sk_test_51N5h0sIYkQYtvPH1DagiB1MUmCDrZUdzAT1NlxcGMHLCIrL39SIrW1FUxwBE0at5JEs25HyzQN1nDQRWEvdRisVK00CjUjfVLu'
-
 
 CART_SESSION_ID = 'cart'
 SESSION_COOKIE_AGE = 86400
@@ -51,7 +48,10 @@ INSTALLED_APPS = [
     'core',
     'store',
     'userprofile',
+    'equipment',
 ]
+
+AUTH_USER_MODEL = 'userprofile.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,8 +65,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'petnet.urls'
 
-WEBSITE_URL = 'http://127.0.0.1:8000'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -78,7 +76,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'store.context_processors.cart',
             ],
         },
     },
@@ -133,6 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static'),
+                    ]
+
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
