@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from userprofile.models import User
 from io import BytesIO
 from PIL import Image
 
@@ -80,24 +81,20 @@ class Product(models.Model):
 class Order(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    email = models.CharField(max_length=100,blank=True,null=True)
     address = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     paid_amount = models.IntegerField(blank=True,null=True)
     is_paid = models.BooleanField(default=False)
-    payment_intent = models.CharField(max_length=255,blank=True,null=True)
+    merchant_id = models.CharField(max_length=255)
     created_by = models.ForeignKey(User,related_name = 'orders',on_delete=models.SET_NULL,blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,related_name='items',on_delete=models.CASCADE)
     product = models.ForeignKey(Product,related_name='items',on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=8,decimal_places=2,blank=True,null=True)
+    price = models.IntegerField()
     quantity = models.IntegerField(default=1)
-
-    def get_display_price(self):
-        return self.price / 100
     
 
 
