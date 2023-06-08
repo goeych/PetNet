@@ -1,0 +1,36 @@
+{% load static %}
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ECMS</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="stylesheet" href="{% static 'css/flatpickr.css' %}">
+    <script src="{% static 'css/flatpickr.js' %}"></script>
+
+  </head>
+  <body>
+    <h1 class="text-white text-xl bg-teal-400">Equipment Calibration Monitoring System</h1>
+    {% include 'core/equipment_navbar.html' %}
+    <div class="container-fluid">
+
+    {% block content %}
+
+    {% endblock content %}
+
+    </div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+flatpickr('.datepicker', {
+  // Add any configuration options for Flatpickr here
+});
+</script>
+  </body>
+</html>

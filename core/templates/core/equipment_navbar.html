@@ -1,0 +1,32 @@
+{%load static %}
+
+
+{% block content %}
+
+<style>
+.nav-item-left{
+    float:left;
+    }
+</style>
+
+<nav class="bg-gray-900">
+    <div class="flex items-center justify-between px-4 py-2">
+        <img src="{% static 'images/companylogo.jpg' %}" class="h-8" alt="Company Logo">
+        <div class="hidden md:block">
+            <ul class="flex space-x-4">
+                <li>
+                    <a href="{% url 'frontpage' %}" class="text-white hover:text-gray-300">Back to Main page</a>
+                </li>
+                <li>
+                    <a href="{% url 'ListCalibrationRecord' %}" class="text-white hover:text-gray-300">List Cal Record</a>
+                </li>
+                <li>
+                    <a href="{% url 'weeklymonitor' %}" class="text-white hover:text-gray-300">Weekly Calibration Status</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+{% endblock content %}
