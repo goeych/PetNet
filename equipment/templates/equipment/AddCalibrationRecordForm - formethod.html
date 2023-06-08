@@ -1,0 +1,22 @@
+{% extends 'core/equipment_base.html'%}
+
+{% block content %}
+    <form method='POST' action=".">
+    {% csrf_token %}
+    <form class=" form-field mb-4">
+    {% for field in form %}
+        <div class="mb-2">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="{{field.id_for_label}}" >{{field.label}}</label>
+            {{field}}
+            {% if field.errors %}
+                <ul class="error-list">
+                    {% for error in field.errors %}
+                        <li>{{error}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endfor%}
+    <button type="input" class="rounded py-3 px-3 bg-teal-300 hover:bg-teal-600">Submit</button>
+    </form>
+{% endblock content %}

@@ -1,0 +1,113 @@
+{% extends 'core/equipment_base.html'%}
+
+{% block content %}
+
+<style>
+    .table, th, td {
+        border: 3px solid green ;
+        font-size:20px;
+        }
+    .titlehead{
+        text-align:center;
+        }
+    .p{
+        text-align:right;
+        }
+    .clscurrentdate{
+        color:green;
+        }
+    .department-container{
+        display:grid;
+        grid-template-rows: 1fr 3fr;
+        }
+</style>
+
+
+<div>
+    <form method="GET" action="">
+        <input type="text" name="q" placeholder="searching by Dept..."/>
+    </form>
+</div>
+
+<div class="department-container">
+    <div>
+        <div>
+            {% for department in departments %}
+                <a href="{% url 'weeklymonitor'%}?q={{department}}">{{department}}</a>
+            {% endfor %}
+        
+            
+        </div>
+    </div>
+
+    
+    <div>
+        <div>
+            <p class="clscurrentdate">The current date is: {{ currentdate }}</p>
+
+            <table style="width:auto;">
+            <tr>
+                <th>Owner</th>
+                <th>Equipment ID</th>
+                <th>Description</th>
+                <th>Cal Item</th>
+                <th>Status</th>
+                <th>Serial No</th>
+                <th>Model No</th>
+                <th>Manufacturer</th>
+                <th>Last Cal Date</th>
+                <th>Next Due Date</th>
+                <th>Frequency</th>
+                <th>Days of Due</th>
+                <th>Action</th>
+                <th>Cal Type</th>
+                <th>Reason</th>
+                </th>
+            </tr>
+            {% for weeklymonitor in weeklymonitors %}
+            <tr>
+                <td>{{ weeklymonitor.department_fk.department }}</td>
+                <td>{{ weeklymonitor.equipment_fk.equipment_id }}</td>
+                <td>{{ weeklymonitor.equipment_fk.description }}</td>
+                <td>{{ weeklymonitor.equipment_fk.cal_item}}</td>
+                <td>{{ weeklymonitor.equipment_fk.status  }}</td>
+                <td>{{ weeklymonitor.equipment_fk.serial_no }}</td>
+                <td>{{ weeklymonitor.equipment_fk.model_no }}</td>
+                <td>{{ weeklymonitor.equipment_fk.manufacturer }}</td>
+                <td>{{ weeklymonitor.last_cal }}</td>
+                <td>{{ weeklymonitor.due_cal}}</td>
+                <td>{{ weeklymonitor.get_difference}}</td>
+                <td class="text-xl">
+                {% if weeklymonitor.get_remain > 60 %}
+                     <span style="color:black">{{ weeklymonitor.get_remain}}</span>
+                {% elif weeklymonitor.get_remain < 0 %}
+                    <span style="color:red ">{{ weeklymonitor.get_remain}} </span>
+                {% elif weeklymonitor.get_remain < 20 %}
+                    <span style="color:pink ">{{ weeklymonitor.get_remain}} </span>
+                {% else %}
+                    <span style="color:green">{{ weeklymonitor.get_remain}}</span>
+                {%endif %}
+                <td>
+                {% if weeklymonitor.get_remain < 10 %}
+                            Action Required
+                        {% else %}
+                            No Action Required
+                        {% endif %}
+                </td>
+                <td>{{ equipment.cal_type}}</td>
+                <td>{{ weeklymonitor.remark}}</td>
+            </tr>
+         
+            
+        {% endfor %}
+
+        <table>
+
+        
+        </div>
+
+    </div>
+    
+</div>
+
+{% endblock content%}

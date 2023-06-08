@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Add your CSS stylesheets and other head elements here -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .form-field {
+            border: 1px solid #000;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-field label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form method='POST' action=".">
+                {% csrf_token %}
+                <div class="form-field mb-4">
+                    {% for field in form %}
+                        <div class="form-field">
+                            <label for="{{field.id_for_label}}">{{field.label}}</label>
+                            {{field}}
+                            {% if field.errors %}
+                                <ul class="error-list">
+                                    {% for error in field.errors %}
+                                        <li>{{error}}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="input" class="rounded py-3 px-3 bg-teal-300 hover:bg-teal-600">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Add your JavaScript files and other body elements here -->
+</body>
+</html>

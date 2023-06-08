@@ -1,0 +1,53 @@
+{% extends 'core/equipment_base.html' %}
+
+{% block content %}
+
+
+    <div class=clsAddCalibrationRecord>
+        <a href="{%url 'AddCalibrationRecord' %}">Add record</a><br><br>
+    </div>
+
+<div>
+    <table class="table table-full-width">
+        <thead>
+            <tr>
+                <th>Department</th>
+                <th>ID Number</th>
+                <th>Status</th>
+                <th>Last Cal Date</th>
+                <th>Due Date</th>
+                <th>Attachment</th>
+                <th>remark</th>
+                <th>Publish</td>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+       
+        {%for calibration in calibrations %}
+             <tr>
+                <td>{{calibration.department_fk}}</td>
+                <td>{{calibration.equipment_fk}}</td>
+                <td>{{calibration.equipment.status}}</td>
+                <td>{{calibration.last_cal}}</td>
+                <td>{{calibration.due_cal}}</td>
+                 <td class="column-adjust-height">
+                    {% if calibration.attachment %}
+                        <a href="{{ calibration.attachment.url }}" target="_blank">View Attachment</a>
+                    {% else %}
+                        No Attachment
+                    {% endif %}
+                </td>
+                <td>{{calibration.remark}}</td>
+                <td class="column-adjust-height"><input type="checkbox" name="publish" {% if calibration.publish %}checked{% endif %}></td>
+                <td><a href="{% url 'UpdateCalibrationRecord' calibration.id%}">Update</a></td>
+                <td><a href="{% url 'DeleteCalibrationRecord' calibration.id%}">Delete</a></td>
+                <hr>
+            </tr>
+        {% endfor %}
+        
+
+    </table>
+</div>
+{% endblock content %}
