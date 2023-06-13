@@ -1,0 +1,27 @@
+.form-field{
+    border:1px solid #dddddd;
+    padding:8px;
+    border-radius:4px;
+    }
+
+<style>
+/*use in listcalibrationrecord.html*/
+  .justify-between {
+    width: 100%; /* Set the container width to 100% */
+  }
+
+  .table-full-width {
+    width: 100%; /* Set the table width to 100% */
+  }
+
+  .table-full-width th,
+  .table-full-width td{
+      text-align:center;
+      
+      }
+
+  .table-full-width .column-adjust-height{
+      height:50px;
+      }
+  
+</style>
