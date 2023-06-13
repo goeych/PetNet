@@ -39,7 +39,7 @@
             <form method='POST' action=".">
                 {% csrf_token %}
                 <div class="form-field mb-4">
-                    <p><a href="{% url 'equipmentPage'%}"></a>Cancel</p>
+                    <a href="{% url 'equipmentPage'%}" class="py-2 px-2 bg-green-200">Cancel</a>
                     <br>
                    <p>Are you sure to delete this record?</p>
                     <button type="input" class="rounded py-3 px-3 bg-teal-300 hover:bg-teal-600">Submit</button>

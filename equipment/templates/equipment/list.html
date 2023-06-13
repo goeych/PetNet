@@ -3,6 +3,22 @@
 {% block content %}
 
 <style>
+    tr:nth-child(even) {
+    background-color: #f2f2f2; /* Adjust the color as reflecor effect as needed */
+  }
+
+    .table-full-width {
+    /*width: 90%; /* Set the table width to 100% */
+    /*margin: 2 auto; /* Center-align the table */
+    }
+    .table-padding{
+        padding:0.75rem;/* not-in-use Adjust the value as per your needs */
+        }
+
+    .table-full-width td{
+        padding:20px;
+        }
+
     .table, th, td {
         border: 3px solid green ;
         font-size:20px;
@@ -41,68 +57,69 @@
     </div>
 
     
-    <div>
+    <div class="main-content">
         <div>
             <p class="clscurrentdate">The current date is: {{ currentdate }}</p>
 
-            <table style="width:auto;">
-            <tr>
-                <th>Owner</th>
-                <th>Equipment ID</th>
-                <th>Description</th>
-                <th>Cal Item</th>
-                <th>Status</th>
-                <th>Serial No</th>
-                <th>Model No</th>
-                <th>Manufacturer</th>
-                <th>Last Cal Date</th>
-                <th>Next Due Date</th>
-                <th>Frequency</th>
-                <th>Days of Due</th>
-                <th>Action</th>
-                <th>Cal Type</th>
-                <th>Reason</th>
-                </th>
-            </tr>
-            {% for weeklymonitor in weeklymonitors %}
-            <tr>
-                <td>{{ weeklymonitor.department_fk.department }}</td>
-                <td>{{ weeklymonitor.equipment_fk.equipment_id }}</td>
-                <td>{{ weeklymonitor.equipment_fk.description }}</td>
-                <td>{{ weeklymonitor.equipment_fk.cal_item}}</td>
-                <td>{{ weeklymonitor.equipment_fk.status  }}</td>
-                <td>{{ weeklymonitor.equipment_fk.serial_no }}</td>
-                <td>{{ weeklymonitor.equipment_fk.model_no }}</td>
-                <td>{{ weeklymonitor.equipment_fk.manufacturer }}</td>
-                <td>{{ weeklymonitor.last_cal }}</td>
-                <td>{{ weeklymonitor.due_cal}}</td>
-                <td>{{ weeklymonitor.get_difference}}</td>
-                <td class="text-xl">
-                {% if weeklymonitor.get_remain > 60 %}
-                     <span style="color:black">{{ weeklymonitor.get_remain}}</span>
-                {% elif weeklymonitor.get_remain < 0 %}
-                    <span style="color:red ">{{ weeklymonitor.get_remain}} </span>
-                {% elif weeklymonitor.get_remain < 20 %}
-                    <span style="color:pink ">{{ weeklymonitor.get_remain}} </span>
-                {% else %}
-                    <span style="color:green">{{ weeklymonitor.get_remain}}</span>
-                {%endif %}
-                <td>
-                {% if weeklymonitor.get_remain < 10 %}
-                            Action Required
-                        {% else %}
-                            No Action Required
-                        {% endif %}
-                </td>
-                <td>{{ equipment.cal_type}}</td>
-                <td>{{ weeklymonitor.remark}}</td>
-            </tr>
-         
-            
-        {% endfor %}
+            <div class="p-5">
+                <table class="table w-full">
+                <tr>
+                    <th>Owner</th>
+                    <th>Equipment ID</th>
+                    <th>Description</th>
+                    <th>Cal Item</th>
+                    <th>Status</th>
+                    <th>Serial No</th>
+                    <th>Model No</th>
+                    <th>Manufacturer</th>
+                    <th>Last Cal Date</th>
+                    <th>Next Due Date</th>
+                    <th>Frequency</th>
+                    <th>Days of Due</th>
+                    <th>Action</th>
+                    <th>Cal Type</th>
+                    <th>Reason</th>
+                    </th>
+                </tr>
+                {% for weeklymonitor in weeklymonitors %}
+                <tr>
+                    <td>{{ weeklymonitor.department_fk.department }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.equipment_id }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.description }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.cal_item}}</td>
+                    <td>{{ weeklymonitor.equipment_fk.status  }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.serial_no }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.model_no }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.manufacturer }}</td>
+                    <td>{{ weeklymonitor.last_cal }}</td>
+                    <td>{{ weeklymonitor.due_cal}}</td>
+                    <td>{{ weeklymonitor.get_difference}}</td>
+                    <td class="text-xl">
+                    {% if weeklymonitor.get_remain > 60 %}
+                         <span style="color:black">{{ weeklymonitor.get_remain}}</span>
+                    {% elif weeklymonitor.get_remain < 0 %}
+                        <span style="color:red ">{{ weeklymonitor.get_remain}} </span>
+                    {% elif weeklymonitor.get_remain < 20 %}
+                        <span style="color:pink ">{{ weeklymonitor.get_remain}} </span>
+                    {% else %}
+                        <span style="color:green">{{ weeklymonitor.get_remain}}</span>
+                    {%endif %}
+                    <td>
+                    {% if weeklymonitor.get_remain < 10 %}
+                                Action Required
+                            {% else %}
+                                No Action Required
+                            {% endif %}
+                    </td>
+                    <td>{{ equipment.cal_type}}</td>
+                    <td>{{ weeklymonitor.remark}}</td>
+                </tr>
+             
+                
+            {% endfor %}
 
-        <table>
-
+            <table>
+        </div>
         
         </div>
 

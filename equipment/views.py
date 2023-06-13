@@ -53,7 +53,7 @@ def AddCalibrationRecord(request):
             #Calibration.objects.create(department_fk = department,
                                        #equipment_fk = equipment,)
 
-            attachment = request.FILES.get('attachment')
+            form_data.attachment = request.FILES.get('attachment')
             form_data.save()
       
             

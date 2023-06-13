@@ -5,23 +5,18 @@ from django import forms
 from django.db import models
 from django.forms import widgets
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
-
 class AddCalibrationRecordForm(forms.ModelForm):
     attachment = forms.FileField(label='Attachment', required=False)  # Add this field for the attachment
-    last_cal = forms.DateField(widget=DateInput)
-    due_cal = forms.DateField(widget=DateInput)
     
     class Meta:
         model = Calibration
         fields = ['department_fk','equipment_fk','last_cal','due_cal','complete','publish','remark','attachment'] # Add other fields here
 
-       ## widgets = {
-       ##     'last_cal': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Enter Cal date...'}),
-       ##     'due_cal': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Enter Due date...'}),
+        widgets = {
+            'last_cal': forms.DateInput(attrs={'class': 'datepicker form-control', 'placeholder': 'Enter Cal date...'}),
+            'due_cal': forms.DateInput(attrs={'class': 'datepicker form-control', 'placeholder': 'Enter Due date...'}),
             # Add widget configurations for other fields if needed
-        ##}
+        }
         
 
 
@@ -29,8 +24,8 @@ class AddCalibrationRecordForm(forms.ModelForm):
         super(AddCalibrationRecordForm,self).__init__(*args,**kwargs)
         self.fields['department_fk'].widget.attrs.update({'class':'form-control','placeholder':'Choice Dept...'})
         self.fields['equipment_fk'].widget.attrs.update({'class':'form-control','placeholder':'Choice ID...'})
-        self.fields['last_cal'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Cal date...'})
-        self.fields['due_cal'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Due date...'})
+        self.fields['last_cal'].widget.attrs.update({'class': 'datepicker form-control', 'placeholder': 'Enter Cal date...'})
+        self.fields['due_cal'].widget.attrs.update({'class': 'datepicker form-control', 'placeholder': 'Enter Due date...'})
         self.fields['complete'].widget.attrs.update({'class':'form-control','placeholder':'Complete...'})
         self.fields['publish'].widget.attrs.update({'class':'form-control','placeholder':'Publish ...'})
         self.fields['remark'].widget.attrs.update({'class':'form-control','placeholder':'Remark...'})
@@ -42,8 +37,8 @@ class UpdateCalibrationRecordForm(forms.ModelForm):
         fields = ['department_fk','equipment_fk','last_cal','due_cal','complete','publish','remark',] # Add other fields here
 
         widgets = {
-            'last_cal': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Enter Cal date...'}),
-            'due_cal': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Enter Due date...'}),
+            'last_cal': forms.DateInput(attrs={'class': 'datepicker form-control', 'placeholder': 'Enter Cal date...'}),
+            'due_cal': forms.DateInput(attrs={'class': 'datepicker form-control', 'placeholder': 'Enter Due date...'}),
             # Add widget configurations for other fields if needed
         }
         
@@ -53,8 +48,8 @@ class UpdateCalibrationRecordForm(forms.ModelForm):
         super(UpdateCalibrationRecordForm,self).__init__(*args,**kwargs)
         self.fields['department_fk'].widget.attrs.update({'class':'form-control','placeholder':'Choice Dept...'})
         self.fields['equipment_fk'].widget.attrs.update({'class':'form-control','placeholder':'Choice ID...'})
-        self.fields['last_cal'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Cal date...'})
-        self.fields['due_cal'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Due date...'})
+        self.fields['last_cal'].widget.attrs.update({'class': 'datepicker form-control', 'placeholder': 'Enter Cal date...'})
+        self.fields['due_cal'].widget.attrs.update({'class': 'datepicker form-control', 'placeholder': 'Enter Due date...'})
         self.fields['complete'].widget.attrs.update({'class':'form-control','placeholder':'Complete...'})
         self.fields['publish'].widget.attrs.update({'class':'form-control','placeholder':'Publish ...'})
         self.fields['remark'].widget.attrs.update({'class':'form-control','placeholder':'Remark...'})
