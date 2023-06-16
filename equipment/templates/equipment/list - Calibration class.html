@@ -42,7 +42,6 @@
 <div>
     <form method="GET" action="">
         <input type="text" name="q" placeholder="searching by Dept..."/>
-        <input type="text" name="qtype" placeholder="searching by Type..."/>
     </form>
 </div>
 
@@ -84,21 +83,17 @@
                 </tr>
                 {% for weeklymonitor in weeklymonitors %}
                 <tr>
-                    <td>{{ weeklymonitor.department.department }}</td>
-                    <td>{{ weeklymonitor.equipment_id }}</td>
-                    <td>{{ weeklymonitor.description }}</td>
-                    <td>{{ weeklymonitor.cal_item}}</td>
-                    <td>{{ weeklymonitor.status  }}</td>
-                    <td>{{ weeklymonitor.serial_no }}</td>
-                    <td>{{ weeklymonitor.model_no }}</td>
-                    <td>{{ weeklymonitor.manufacturer }}</td>
-                     <td>{{ weeklymonitor.last_cal }}</td>
+                    <td>{{ weeklymonitor.department_fk.department }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.equipment_id }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.description }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.cal_item}}</td>
+                    <td>{{ weeklymonitor.equipment_fk.status  }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.serial_no }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.model_no }}</td>
+                    <td>{{ weeklymonitor.equipment_fk.manufacturer }}</td>
+                    <td>{{ weeklymonitor.last_cal }}</td>
                     <td>{{ weeklymonitor.due_cal}}</td>
-                    {%if weeklymonitor.get_difference %}
-                        <td>{{ weeklymonitor.get_difference}}</td>
-                    {% endif %}
-
-                     {%if weeklymonitor.get_remain %}
+                    <td>{{ weeklymonitor.get_difference}}</td>
                     <td class="text-xl">
                     {% if weeklymonitor.get_remain > 60 %}
                          <span style="color:black">{{ weeklymonitor.get_remain}}</span>
@@ -110,15 +105,14 @@
                         <span style="color:green">{{ weeklymonitor.get_remain}}</span>
                     {%endif %}
                     <td>
-                    {%endif%}
                     {% if weeklymonitor.get_remain < 10 %}
                                 Action Required
                             {% else %}
                                 No Action Required
                             {% endif %}
                     </td>
-                    <td>{{ weeklymonitor.cal_type}}</td>
-                    
+                    <td>{{ equipment.cal_type}}</td>
+                    <td>{{ weeklymonitor.remark}}</td>
                 </tr>
              
                 

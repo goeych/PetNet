@@ -17,13 +17,18 @@ def weeklymonitor(request):
     currentdate = getdate.strftime('%d %B %y')
     ListAll = Calibration.objects.all()
     
-    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    q = request.GET.get('q') if request.GET.get('q') != None else '' # searching by dept
+
+    qtype = request.GET.get('qtype') if request.GET.get('qtype') != None else 'C' #searching by caltype
+
+    print("qtype",qtype)
     
     ##weeklymonitors = Calibration.objects.filter(Q(equipment__department__department=q),
       ##                                          Q(complete=False),
         ##                                        )
 
-    weeklymonitors = Calibration.objects.filter(Q(department_fk__department__icontains=q) & Q(publish=True))
+    #weeklymonitors = Calibration.objects.filter(Q(department_fk__department__icontains=q) & Q(publish=True))//query from Calibration class.
+    weeklymonitors = Equipment.objects.filter(Q(department__department__icontains=q)|Q(caltype =  qtype))#query from Equipment class.
 
 
     departments = Department.objects.all() 
@@ -48,7 +53,6 @@ def AddCalibrationRecord(request):
         if form.is_valid():
             form_data = form.save(commit =False)
             #department = form.cleaned_data['department']
-            #equipment = form.cleaned_data['equipment_id']
             
             #Calibration.objects.create(department_fk = department,
                                        #equipment_fk = equipment,)

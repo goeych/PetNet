@@ -16,17 +16,32 @@ class Department (models.Model):
         return self.department
 
 class Equipment(models.Model):
+
+    ACTIVE = 'active'
+    INACTIVE = 'inactive'
+    CAL_PROGRESS = 'cal_progress'
+    DECOMMISSION= 'decommission'
+
+    STATUS = (
+        (ACTIVE,'Active'),
+        (INACTIVE,'Inactive'),
+        (CAL_PROGRESS,'Cal_progress'),
+        (DECOMMISSION,'Decommission'),
+        )
+
+
+    
     department = models.ForeignKey(Department,on_delete=models.CASCADE)
     equipment_id = models.CharField(max_length=50,null=True,blank=True)
     description = models.CharField(max_length=200,null=True,blank=True)
-    status = models.IntegerField(null=True,blank=True)
+    status = models.CharField(max_length=20,choices=STATUS,null=True,blank=True)
     #cal_item = models.CharField(max_length = 255)
     #ref_standard = models.CharField(max_length=200,null=True,blank=True)
     #nist_no = models.CharField(max_length=50,null=True,blank=True)
     serial_no = models.CharField(max_length=50,null=True,blank=True)
     #asset_no = models.CharField(max_length=50,null=True,blank=True)
     model_no = models.CharField(max_length=50,null=True,blank=True)
-    #caltype = models.CharField(max_length=50,null=True,blank=True)
+    caltype = models.CharField(max_length=50,null=True,blank=True) # C or M
     #email = models.EmailField(null=True,blank=True)
     #unit_of_meas = models.CharField(max_length=50,null=True,blank=True)
     #drawing_no = models.CharField(max_length=50,null=True,blank=True)
@@ -43,6 +58,8 @@ class Equipment(models.Model):
     manufacturer = models.CharField(max_length=50,null=True,blank=True)
     owner = models.CharField(max_length=50,null=True,blank=True)
     #vendor_contact = models.CharField(max_length=50,null=True,blank=True)
+    last_cal = models.DateField(null=True,blank=True)
+    due_cal = models.DateField(null=True,blank=True)
     cal_item = models.CharField(max_length=50,null=True,blank=True)
     cal_type = models.CharField(max_length=50,null=True,blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -50,6 +67,21 @@ class Equipment(models.Model):
 
     def __str__(self):
         return f"{self.equipment_id}"
+
+    def get_difference(self):
+        if self.due_cal and self.last_cal:
+            difference = self.due_cal - self.last_cal
+            return difference.days
+        else:
+            return 0
+
+    def get_remain(self):
+        today = datetime.today().date()
+        if self.due_cal:
+            remain = self.due_cal - today
+            return remain.days
+        else:
+            return 0
 
 # for calibration
 class Calibration(models.Model):
@@ -68,8 +100,17 @@ class Calibration(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        # Update the last_cal and due_cal fields in Equipment model
+        if self.equipment_fk:
+            self.equipment_fk.last_cal = self.last_cal
+            self.equipment_fk.due_cal = self.due_cal
+            self.equipment_fk.save()
+
+        super().save(*args, **kwargs)
+
     def get_difference(self):
-        difference = self.due_cal - self.last_cal
+        difference = self.due_cal - self.last_cal 
         return difference.days
 
     def get_remain(self):
